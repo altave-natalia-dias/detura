@@ -1,6 +1,5 @@
 # detura
-Verificador de Classes de Anotação em Imagens
-O script fornecido realiza as seguintes tarefas:
+Verificador de Classes de Anotação em Imagens, o script fornecido realiza as seguintes tarefas:
 
     Lê um arquivo JSON que contém informações sobre imagens e suas anotações.
     Define uma lista de classes de anotação desejadas, incluindo "hardhat", "uniform", "boots", "gloves", "hearing protection", "safety glasses" e "lifejacket".
