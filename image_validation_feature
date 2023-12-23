@@ -1,0 +1,11 @@
+def gerar_relatorio_de_imagens(total_imagens, imagens_com_erros):
+    relatorio = f"Total de Imagens: {total_imagens}\n"
+    relatorio += f"Imagens com Anotações Corretas: {total_imagens - len(imagens_com_erros)}\n"
+    relatorio += f"Imagens com Erros: {len(imagens_com_erros)}\n"
+
+    if imagens_com_erros:
+        relatorio += "\nTipos de Erros:\n"
+        for erro in imagens_com_erros:
+            relatorio += f"- {erro}\n"
+
+    return relatorio
