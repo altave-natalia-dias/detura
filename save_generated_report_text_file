@@ -1,0 +1,39 @@
+import json
+
+
+def generate_image_report(total_images, images_with_errors):
+    report = f"Total Images: {total_images}\n"
+    report += f"Images with Correct Annotations: {total_images - len(images_with_errors)}\n"
+    report += f"Images with Errors: {len(images_with_errors)}\n"
+
+    if images_with_errors:
+        report += "\nError Types:\n"
+        for error in images_with_errors:
+            report += f"- {error}\n"
+
+    return report
+
+
+def save_report_to_file(report, file_path="image_report.txt"):
+    with open(file_path, "w") as file:
+        file.write(report)
+    print(f"Report saved to {file_path}")
+
+
+def main():
+    json_path = "/home/Desktop/json/instances_default.json"
+    image_path = "/home/Desktop/frames"
+    desired_classes = ["hardhat", "uniform", "boots", "gloves", "hearing protection", "safety glasses", "lifejacket"]
+
+    total_images, images_with_errors = check_image_classes(json_path, image_path, desired_classes)
+
+    # Generate and print/save the report
+    report = generate_image_report(total_images, images_with_errors)
+    print(report)
+
+    # Save the report to a file
+    save_report_to_file(report)
+
+
+if __name__ == "__main__":
+    main()
