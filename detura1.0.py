@@ -2,69 +2,57 @@ import json
 from PIL import Image
 import os
 
-# Caminho para o arquivo JSON com todas as informações
-caminho_json = "/home/Área de Trabalho/json/instances_default.json"
 
-# Classes de anotação desejadas
-classes_desejadas = ["hardhat", "uniform", "boots", "gloves", "hearing protection", "safety glasses", "lifejacket"]
+def check_image_classes(json_path, image_path, desired_classes):
+    with open(json_path, "r") as file:
+        json_data = json.load(file)
 
-# Caminho para os frames a serem validados
-caminho_imagem = "/home/Área de Trabalho/frames"
+    total_images = len(json_data["images"])
+    checked_images = 0
+    images_with_errors = []
 
+    for image in json_data["images"]:
+        image_name = image["name"]
 
-# Função para verificar se as classes de anotação estão corretas
-def verificar_classes_imagens(caminho_json, caminho_imagem):
-    # Abre o arquivo JSON e carrega os dados
-    with open(caminho_json, "r") as arquivo:
-        dados_json = json.load(arquivo)
+        if not image_name:
+            image_name = "Unnamed Image"
 
-    total_imagens = len(dados_json["imagens"])
-    imagens_conferidas = 0
-    imagens_com_erro = []
+        image_file = os.path.join(image_path, image_name)
 
-    # Percorre todas as imagens no arquivo JSON
-    for imagem in dados_json["imagens"]:
-        # Obtém o caminho e o nome da imagem
-        nome_imagem = imagem["nome"]
+        if not os.path.exists(image_file):
+            print(f"Image {image_name} not found.")
+            images_with_errors.append(image_name)
+            continue
 
-        # Verifica se o arquivo de imagem existe
-        if nome_imagem:
-            arquivo_imagem = os.path.join(caminho_imagem, nome_imagem)
-            if os.path.exists(arquivo_imagem):
-                # Abre a imagem usando a biblioteca PIL
-                img = Image.open(arquivo_imagem)
+        img = Image.open(image_file)
+        classes_present = set(image["classes"])
 
-                # Obtém as classes de anotação presentes na imagem
-                classes_presentes = set(imagem["classes"])
-
-                # Verifica se as classes de anotação estão corretas
-                if set(classes_desejadas).issubset(classes_presentes):
-                    print(f"A imagem {nome_imagem} está corretamente anotada.")
-                else:
-                    print(f"A imagem {nome_imagem} possui classes de anotação incorretas.")
-                    imagens_com_erro.append(nome_imagem)
-            else:
-                print(f"A imagem {nome_imagem} não foi encontrada.")
-                imagens_com_erro.append(nome_imagem)
+        if set(desired_classes).issubset(classes_present):
+            print(f"Image {image_name} is correctly annotated.")
         else:
-            print("Nome da imagem não fornecido.")
-            imagens_com_erro.append("Imagem sem nome")
+            print(f"Image {image_name} has incorrect annotation classes.")
+            images_with_errors.append(image_name)
 
-        # Atualiza o contador
-        imagens_conferidas += 1
-        print(f"Imagens conferidas: {imagens_conferidas}/{total_imagens}")
+        checked_images += 1
+        print(f"Images checked: {checked_images}/{total_images}")
 
-    # Exibe a mensagem de conclusão
-    print("Verificação concluída.")
-    if imagens_com_erro:
-        print(f"Número de imagens com erros: {len(imagens_com_erro)}")
-        print("Imagens com erros:")
-        for erro in imagens_com_erro:
-            print(erro)
+    print("Validation completed.")
+    if images_with_errors:
+        print(f"Number of images with errors: {len(images_with_errors)}")
+        print("Images with errors:")
+        for error in images_with_errors:
+            print(error)
     else:
-        print("Todas as imagens foram conferidas com sucesso.")
+        print("All images were successfully checked.")
 
 
-# Chama a função para verificar as classes de anotação
-verificar_classes_imagens(caminho_json, caminho_imagem)
+def main():
+    json_path = "/home/Desktop/json/instances_default.json"
+    image_path = "/home/Desktop/frames"
+    desired_classes = ["hardhat", "uniform", "boots", "gloves", "hearing protection", "safety glasses", "lifejacket"]
 
+    check_image_classes(json_path, image_path, desired_classes)
+
+
+if __name__ == "__main__":
+    main()
