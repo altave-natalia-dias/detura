@@ -1,13 +1,14 @@
-# detura
-Verificador de Classes de Anotação em Imagens, o script fornecido realiza as seguintes tarefas:
+Annotation Class Verifier for Images
 
-    Lê um arquivo JSON que contém informações sobre imagens e suas anotações.
-    Define uma lista de classes de anotação desejadas, incluindo "hardhat", "uniform", "boots", "gloves", "hearing protection", "safety glasses" e "lifejacket".
-    Percorre todas as imagens presentes no arquivo JSON.
-    Para cada imagem, verifica se o arquivo de imagem correspondente existe.
-    Abre a imagem usando a biblioteca PIL.
-    Obtém as classes de anotação presentes na imagem a partir do JSON.
-    Verifica se todas as classes de anotação desejadas estão presentes nas classes obtidas.
-    Exibe mensagens indicando se a imagem está corretamente anotada ou se possui classes de anotação incorretas.
-    Mantém um contador para acompanhar o progresso da verificação das imagens.
-    No final da verificação, exibe uma mensagem informando o número total de imagens com erros e lista os nomes das imagens com erros, se houver, ou uma mensagem indicando que todas as imagens foram conferidas com sucesso.
+The provided script serves as an Annotation Class Verifier for Images and performs the following tasks:
+
+    Reads a JSON file containing information about images and their annotations.
+    Defines a list of desired annotation classes, including "hardhat," "uniform," "boots," "gloves," "hearing protection," "safety glasses," and "lifejacket."
+    Iterates through all the images present in the JSON file.
+    For each image, checks if the corresponding image file exists.
+    Opens the image using the PIL library.
+    Retrieves the annotation classes present in the image from the JSON.
+    Verifies if all the desired annotation classes are present in the obtained classes.
+    Displays messages indicating whether the image is correctly annotated or has incorrect annotation classes.
+    Maintains a counter to track the progress of image verification.
+    At the end of the verification, displays a message indicating the total number of images with errors and lists the names of images with errors, if any, or a message indicating that all images were successfully checked.
